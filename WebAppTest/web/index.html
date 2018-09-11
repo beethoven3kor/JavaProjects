@@ -1,16 +1,56 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Json,HTML5,JQuery,Servlets</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                GetUsuario();
+            });
+            
+            function GetUsuario(){
+                $.ajax({
+                    type :"get",
+                    url : "VisualizarUsuariosServlet",
+                    async : true,
+                    cache : false,
+                    success: function(res){
+                        $.each(res,function(i,usuarios){
+                            $("#usuario").append($("<option>",{value:usuarios.IdUsuario, text:usuarios.Usuario}));
+                            $("#TbUsuario").append($("<tr>").append("<td>"+usuarios.IdUsuario+"</td>"+
+                                                                    "<td>"+usuarios.Usuario+"</td>"+
+                                                                    "<td>"+usuarios.Nombre+"</td>"+
+                                                                    "<td>"+usuarios.ApellidoPat+"</td>"+
+                                                                    "<td>"+usuarios.Estado+"</td>"+
+                                                                    "<td>"+usuarios.Pais+"</td>"+
+                                                                    "<td>"+usuarios.centro+"</td>"));
+                        });
+                    } 
+                });
+            };
+        </script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <select name="usuario" id="usuario">
+            <option value="">--Elige un usuario--</option>
+        </select>
+        <table border="1" id="TbUsuario">
+            <thead>
+                <tr>
+                    <th>Id Usuario</th>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Estado</th>
+                    <th>Pais</th>
+                    <th>Centro</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
     </body>
 </html>
